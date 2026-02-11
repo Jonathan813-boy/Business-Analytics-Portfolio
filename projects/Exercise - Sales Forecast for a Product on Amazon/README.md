@@ -1,38 +1,25 @@
-CRISP-DM 框架
+## 项目流程（基于 CRISP-DM 标准）
 
-1.业务理解（Business Understanding）
+本项目采用业界标准 CRISP-DM 流程完成亚马逊产品销量预测分析：
 
--项目目标：识别对销量影响最大的关键因素（如评论数、折扣力度、评分等），构建决策树回归模型，预测亚马逊产品销量（sales）。
--预期业务价值：为卖家提供定价、促销和平台曝光策略优化依据；为电商平台提升推荐系统销量预测准确率。
--成功标准：模型在测试集上 R² > 0.6，且能清晰解释 Top 5 驱动因素。
+1. **业务理解**  
+   目标：预测亚马逊产品销量（sales），识别关键驱动因素（如评论数、折扣、评分）。
 
+2. **数据理解**  
+   数据集：amazon_products.csv（约 42k 条记录），初步探索缺失值、分布与相关性。
 
-2.数据理解（Data Understanding）
+3. **数据准备**  
+   删除缺失目标行、对类别特征 one-hot 编码、保留折扣百分比等衍生特征。
 
--数据来源：amazon_products.csv（约42,675条记录，15个字段）。
--初步探索：通过 df.info() 和 head() 查看数据结构、缺失值分布（sales、product_rating 等列有缺失）、变量类型（数值+类别）。
+4. **建模**  
+   使用 DecisionTreeRegressor，先建基线模型，再通过 GridSearchCV + 5 折 CV 调参。
 
+5. **评估**  
+   指标：MAE / RMSE / R²  
+   核心输出：特征重要性排序 & Top 20 可视化图  
+   主要发现：评论总数 > 折扣力度 > 商品评分 是销量最强驱动因素。
 
-3.数据准备（Data Preparation）
+6. **部署**  
+   当前为分析阶段，模型可保存为 pickle，后续可扩展为预测 API 或 dashboard。
 
-删除 sales 为空的行（目标变量缺失样本无效）、对类别变量（is_best_seller、is_sponsored、product_category 等）进行 one-hot 编码、保留/计算衍生特征（如 discount_percentage）、数值缺失值采用中位数或均值填充（视情况）
-
-
-4.建模（Modeling）
-
--模型选择：DecisionTreeRegressor
--流程：
-      基线模型：默认参数决策树
-      超参数调优：使用 GridSearchCV + 5折交叉验证，搜索 max_depth、min_samples_split、min_samples_leaf 等
-      最佳模型：得到调优后的 best_tree
-
-
-5.评估（Evaluation）
-
--方法：5折交叉验证（cross_validate / cross_val_predict）
--主要指标：MAE、RMSE、R²
--模型解释：特征重要性排序（pd.Series(feature_importances_)） + Top 20 条形图可视化
--核心洞察：销量最强驱动因素依次为 total_reviews（评论总数）、discount_percentage（折扣力度）、product_rating（评分）等，符合电商商业直觉。
-
-
-6.部署（Deployment）-练习文件暂无部署~
+通过该流程，从业务需求到可解释洞察形成闭环，为电商定价与营销策略提供数据支持。
