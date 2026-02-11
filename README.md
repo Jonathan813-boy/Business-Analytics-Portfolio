@@ -1,4 +1,4 @@
-# GU,(Jonathan)Minghua 的商业分析项目合集
+# GU,(Jonathan)Minghua 的商业分析项目（CRISP-DM）合集
 
 MSc Marketing @ PolyU | 专注客户行为、营销优化、商业数据驱动决策
 
