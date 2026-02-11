@@ -6,7 +6,7 @@ MSc Marketing @ PolyU | 专注客户行为、营销优化、商业数据驱动�
 
 - **[信用卡客户流失预测](projects/Credit-Card-Churn-2025/)**  
   随机森林模型（ROC-AUC 0.9802），识别交易行为为核心驱动，提出精准挽留策略。
-- **亚马逊产品销量预测**  
+- **[练习-亚马逊某产品销量预测](projects/Exercise-Sales-Forecast-for-a-Product-on-Amazon/)**  
   基于决策树回归的 CRISP-DM 实践
 
 
